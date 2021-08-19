@@ -1,0 +1,69 @@
+const Engine = Matter.Engine;
+const World = Matter.World;
+const Bodies = Matter.Bodies;
+const Body = Matter.Body;
+const Constraint = Matter.Constraint;
+
+const Composites = Matter.Composites;
+const Composite = Matter.Composite;
+
+
+var ball,groundObj,leftSide,rightSide;
+var world;
+var radius = 40;
+
+
+
+
+function setup() {
+	createCanvas(1600, 700);
+	rectMode(CENTER);
+
+	engine = Engine.create();
+	world = engine.world;
+
+	var ball_options={
+		isStatic:false,
+		restitution:0.3,
+		friction:0,
+		density:1.2
+	}
+	
+	ball = Bodies.circle(360,200,radius/2,ball_options);
+	World.add(world,ball);
+	
+	groundObj=new ground(width/2,670,width,20);
+
+	leftSide = new ground(100,400,20,350);
+rightSide=new ground(1300,600,20,120);
+
+rightSide=new ground(1100,400,20,350);
+
+
+	Engine.run(engine);
+  
+}
+
+
+function draw() {
+  rectMode(CENTER);
+  background("pink");
+  Engine.update(engine)
+ 
+  ellipse(ball.position.x,ball.position.y,radius,radius);
+
+  groundObj.display();
+  leftSide.display();  
+rightSide.display();
+rightSide.display();
+
+}
+
+function keyPressed() {
+  	if (keyCode === UP_ARROW) {
+
+		Matter.Body.applyForce(ball,ball.position,{x:85,y:-85});
+
+    
+  	}
+}
